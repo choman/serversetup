@@ -1,5 +1,4 @@
-Setyup instructions 
-
+Setup instructions:
 
 1. installed ubuntu VM
 1. installed vbox additions
