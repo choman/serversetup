@@ -1,0 +1,6 @@
+[submodule "myelk-docker"]
+	path = myelk-docker
+	url = https://github.com/choman/myelk-docker.git
+[submodule "freeipa-server"]
+	path = freeipa-server
+	url = https://github.com/choman/freeipa-server.git
