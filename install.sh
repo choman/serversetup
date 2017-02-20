@@ -11,27 +11,6 @@
 #
 #######################################################################
 
-function parse_yaml() {
-    local prefix=$2
-    local s
-    local w
-    local fs
-    s='[[:space:]]*'
-    w='[a-zA-Z0-9_]*'
-    fs="$(echo @|tr @ '\034')"
-    sed -ne "s|^\($s\)\($w\)$s:$s\"\(.*\)\"$s\$|\1$fs\2$fs\3|p" \
-        -e "s|^\($s\)\($w\)$s[:-]$s\(.*\)$s\$|\1$fs\2$fs\3|p" "$1" |
-    awk -F"$fs" '{
-       indent = length($1)/2;
-       vname[indent] = $2;
-       for (i in vname) {if (i > indent) {delete vname[i]}}
-           if (length($3) > 0) {
-               vn=""; for (i=0; i<indent; i++) {vn=(vn)(vname[i])("_")}
-               printf("%s%s%s=(\"%s\")\n", "'"$prefix"'",vn, $2, $3);
-           }
-    }' | sed 's/_=/+=/g'
-}
-
 function parse_yaml2() {
     local prefix=$2
     local s
@@ -57,7 +36,6 @@ function parse_yaml2() {
 eval parse_yaml2 config "CONFIG_"
 eval $(parse_yaml2 config "CONFIG_")
 
-
 ##if $DEBUG; then
 ##    for i in ${CONFIG_ppas[@]}; do
 ##        if [[ $i == ppa* ]]; then
@@ -76,35 +54,69 @@ printf "Please enter the admin passwd: \n"
 sudo echo ""
 
 
+if [ -f /var/lib/dpkg/lock ]; then
+    sudo rm /var/lib/dpkg/lock
+fi
+
+IFS=""
 printf "\nInstalling PPA(s):\n"
 for i in ${CONFIG_ppas[@]}; do
     if [[ $i == ppa* ]]; then
         printf  "  - Adding ppa: $i...  "
         sudo apt-add-repository -y $i 2> /dev/null
     else
-        printf  "  - Adding ppa: $i...  "
-        sudo sh -c "echo '$CONFIG_ppas___url' > $CONFIG_ppas___sfile"
-        echo "  - getting key $CONFIG_ppas___key"
-        wget -q -O - $CONFIG_ppas___key | sudo apt-key add -
+        appname=$(echo $i | sed -e 's/://' -e 's/[[:space:]]*$//')
+
+        # get app info
+        # make debug statement
+        #printf  "  - Parsing ppa: $appname...  \n"
+
+        eval myvar=( \${CONFIG_ppas_$appname[@]} )
+        url=""
+        sfile=""
+        item=""
+        var=""
+        key=""
+
+        for z in ${myvar[@]}; do
+           eval var=$(echo $z | awk -F: '{print $1}')
+           len=$(expr ${#var} + 1)
+           item=$(echo ${z:$len} | sed -e 's/^[[:space:]]//')
+           if [[ $var == key ]]; then
+              key=$item
+           else
+              if [[ $var == url ]]; then
+                 url=$item
+              else
+                 sfile=$item
+              fi
+           fi
+        done
+
+        printf  "  - Adding ppa: $appname...  "
+        sudo sh -c "echo '$url' > $sfile"
+        wget -q -O - $key | sudo apt-key add -
     fi
 done
-
 
 #
 # install apt-fast
 #   - need to automate install and config of apt-fast
 printf "\nInstalling base apps\n"
-sudo apt update
-sudo apt install -y di axel aria2 git build-essential
+sudo apt-get update
+sudo apt-get install -y di axel aria2 git build-essential
 
 # quickest way to add and configure apt-fast
 if [ ! -x /usr/bin/apt-fast ]; then 
    git submodule update --init
    sudo cp apt-fast/apt-fast /usr/bin
    sudo chmod +x /usr/bin/apt-fast
+
    if [ -f files/apt-fast.conf ]; then
+       echo "installing: files/apt-fast.conf --> /etc"
        sudo cp files/apt-fast.conf /etc
    else
+       echo "installing: apt-fast/apt-fast.conf --> /etc"
        sudo cp apt-fast/apt-fast.conf /etc
    fi
 
