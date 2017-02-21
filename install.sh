@@ -138,7 +138,7 @@ sudo apt-fast dist-upgrade -y
 # determine vbox version
 #   - place holder
 
-sudo apt-fast install -y apt-transport-https ca-certificates
+sudo apt-fast install -y apt-transport-https ca-certificates ssh
 
 # setup docker
 sudo apt-key adv \
