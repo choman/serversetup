@@ -4,3 +4,6 @@
 [submodule "freeipa-server"]
 	path = freeipa-server
 	url = https://github.com/choman/freeipa-server.git
+[submodule "apt-fast"]
+	path = apt-fast
+	url = https://github.com/ilikenwf/apt-fast.git
