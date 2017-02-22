@@ -14,3 +14,9 @@
 ppas:
   - ppa:saiarcot895/myppa
   - ppa:git-core/ppa
+
+
+freeipa:
+    ip:       10.0.2.4
+    hostname: ipa
+    fqdn:     ipa.example.com

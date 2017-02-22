@@ -157,6 +157,10 @@ sudo apt-fast update && sudo apt-fast install -y docker-engine docker-compose
 sudo groupadd docker
 sudo usermod -aG docker $USER
 
+echo "configuring /etc/hosts"
+echo "$CONFIG_freeipa__ip      $CONFIG_freeipa__hostname  $CONFIG_freeipa__fqdn" | sudo tee -a /etc/hosts
+
+
 #
 # determine vbox version
 #   - place holder
