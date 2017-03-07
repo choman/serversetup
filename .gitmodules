@@ -7,3 +7,6 @@
 [submodule "apt-fast"]
 	path = apt-fast
 	url = https://github.com/ilikenwf/apt-fast.git
+[submodule "docker_vault"]
+	path = docker_vault
+	url = https://github.com/choman/docker_vault.git
