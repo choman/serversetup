@@ -137,6 +137,9 @@ sudo apt-fast dist-upgrade -y
 #
 # determine vbox version
 #   - place holder
+if [ $(getent group vboxsf) ]; then
+    sudo usermod -aG vboxsf $USER
+fi
 
 sudo apt-fast install -y apt-transport-https ca-certificates ssh \
                          meld autofs tmux vlock
@@ -165,11 +168,6 @@ sudo usermod -aG docker $USER
 
 echo "configuring /etc/hosts"
 echo "$CONFIG_freeipa__ip      $CONFIG_freeipa__hostname  $CONFIG_freeipa__fqdn" | sudo tee -a /etc/hosts
-
-
-#
-# determine vbox version
-#   - place holder
 
 # enable ufw
 sudo ufw enable
