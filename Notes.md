@@ -1,0 +1,3 @@
+- git submodules
+- need cert documentation for freeipa, logstash, vault
+- need to enable certs for https vault
