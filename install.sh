@@ -117,6 +117,14 @@ printf "\nInstalling base apps\n"
 sudo apt-get update
 sudo apt-get install -y di axel aria2 git build-essential
 
+
+git submodule update --init --remote
+for dir in docker_vault freeipa-server myelk-docker
+do
+    cd $dir
+    git submodule update --init --remote
+done
+
 # quickest way to add and configure apt-fast
 if [ ! -x /usr/bin/apt-fast ]; then 
    git submodule update --init
