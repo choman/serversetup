@@ -11,6 +11,15 @@
 #
 #######################################################################
 
+function setup_vault() {
+    if [ ! -f /usr/local/bin/vault ]; then
+        wget -nc -O /tmp/vault.zip https://releases.hashicorp.com/vault/0.7.0/vault_0.7.0_linux_amd64.zip
+        unzip /tmp/vault.zip -d /tmp
+        sudo cp /tmp/vault /usr/local/bin
+    fi
+}
+
+
 function parse_yaml2() {
     local prefix=$2
     local s
@@ -35,6 +44,8 @@ function parse_yaml2() {
 
 eval parse_yaml2 config "CONFIG_"
 eval $(parse_yaml2 config "CONFIG_")
+
+setup_vault
 
 ##if $DEBUG; then
 ##    for i in ${CONFIG_ppas[@]}; do
