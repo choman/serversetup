@@ -121,8 +121,8 @@ sudo apt-get install -y di axel aria2 git build-essential
 git submodule update --init --remote
 for dir in docker_vault freeipa-server myelk-docker
 do
-    cd $dir
-    git submodule update --init --remote
+    echo "updating: $dir"
+    (cd $dir; git submodule update --init --remote)
 done
 
 # quickest way to add and configure apt-fast
