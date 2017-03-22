@@ -12,10 +12,13 @@
 #######################################################################
 
 function setup_vault() {
+    vers=0.7.0
+
     if [ ! -f /usr/local/bin/vault ]; then
-        wget -nc -O /tmp/vault.zip https://releases.hashicorp.com/vault/0.7.0/vault_0.7.0_linux_amd64.zip
+        wget -nc -O /tmp/vault.zip https://releases.hashicorp.com/vault/${vers}/vault_${vers}_linux_amd64.zip
         sudo unzip /tmp/vault.zip -d /usr/local/bin
     fi
+
 }
 
 
