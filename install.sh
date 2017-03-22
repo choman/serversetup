@@ -14,8 +14,7 @@
 function setup_vault() {
     if [ ! -f /usr/local/bin/vault ]; then
         wget -nc -O /tmp/vault.zip https://releases.hashicorp.com/vault/0.7.0/vault_0.7.0_linux_amd64.zip
-        unzip /tmp/vault.zip -d /tmp
-        sudo cp /tmp/vault /usr/local/bin
+        sudo unzip /tmp/vault.zip -d /usr/local/bin
     fi
 }
 
