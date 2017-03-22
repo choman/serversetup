@@ -115,7 +115,16 @@ done
 #   - need to automate install and config of apt-fast
 printf "\nInstalling base apps\n"
 sudo apt-get update
-sudo apt-get install -y di axel aria2 git build-essential
+
+#
+# update repo and install prereqs
+sudo apt-get update -qq
+sudo DEBIAN_FRONTEND=noninteractive apt-get -y install apt-fast
+sudo cp -v files/apt-fast.conf /etc
+sudo cp -v /usr/share/bash-completion/completions/apt-fast /etc/bash_completion.d/
+
+#
+sudo apt-fast install -y di axel aria2 git build-essential
 
 
 git submodule update --init --remote
@@ -125,32 +134,7 @@ do
     (cd $dir; git submodule update --init --remote)
 done
 
-# quickest way to add and configure apt-fast
-if [ ! -x /usr/bin/apt-fast ]; then 
-   git submodule update --init
-   sudo cp -v apt-fast/apt-fast /usr/bin
-   sudo chmod +x /usr/bin/apt-fast
-
-   if [ -f files/apt-fast.conf ]; then
-       echo "installing: files/apt-fast.conf --> /etc"
-       sudo cp -v files/apt-fast.conf /etc
-   else
-       echo "installing: apt-fast/apt-fast.conf --> /etc"
-       sudo cp -v apt-fast/apt-fast.conf /etc
-   fi
-
-   # install apt-fast completions (bash)
-   sudo cp -v apt-fast/completions/bash/apt-fast /etc/bash_completion.d/
-   sudo cp -v apt-fast/completions/bash/apt-fast /usr/share/bash-completion/completions/apt-fast
-   sudo chown root:root /etc/bash_completion.d/apt-fast
-   . /etc/bash_completion
-
-   # install apt-fast completions (zsh)
-   sudo cp -v apt-fast/completions/zsh/_apt-fast /usr/share/zsh/functions/Completion/Debian/
-   sudo chown root:root /usr/share/zsh/functions/Completion/Debian/_apt-fast
-   # source /usr/share/zsh/functions/Completion/Debian/_apt-fast
-fi
-
+#
 sudo apt-fast dist-upgrade -y
 
 #
