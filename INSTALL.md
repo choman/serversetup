@@ -24,7 +24,7 @@ NOTE: IPA data dir  is defined in the myenv file
 
 Logstash:
 - cd myelk-docker
-- ./build.sh
+- ./build.sh - this may take a while
 - ./runme.sh
 
 NOTE: Should be able to install filebeat(s) on any system and
