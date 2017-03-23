@@ -19,8 +19,8 @@ FreeIPA:
 - cp myenv.template myenv
 - edit the myenv file
 - ./build.sh - this may take a while
-- ./run.sh
-
+- ./run.sh - at prompts;  no then  yes
+NOTE: IPA data dir  is defined in the myenv file
 
 Logstash:
 - cd myelk-docker
