@@ -27,7 +27,6 @@ Logstash:
 - ./build.sh - this may take a while
 - ./runme.sh
 
-NOTE: Should be able to install filebeat(s) on any system and
-      send logs to the logstash server.
-
-NOTE: currently the log data is not persistent
+NOTE:
+- Should be able to install filebeat(s) on any system and send logs to the logstash server
+- Currently the log data is not persistent
