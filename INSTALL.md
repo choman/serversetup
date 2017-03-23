@@ -11,8 +11,9 @@ Notes on installation of the docker server and the containers
 - edit the setup.sh script
 - run the setup.sh script
 - mv the files (token & keys) to the client (scp)
-   NOTE: if the client is behind a NAT, you may need to 
-         scp to this server from there
+   
+NOTE: 
+- if the client is behind a NAT, you may need to scp to this server from there
 
 ## FreeIPA:
 - cd freeipa-server
