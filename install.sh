@@ -178,5 +178,9 @@ echo "$CONFIG_freeipa__ip      $CONFIG_freeipa__hostname  $CONFIG_freeipa__fqdn"
 sudo ufw enable
 
 if $CONFIG_using_elk; then
-    sudo sysctl -w vm.max_map_count=262144
+    MAX="vm.max_map_count=262144"
+
+    sudo sysctl -w $MAX
+    echo $MAX | sudo tee /etc/sysctl.d/60-elasticsearch.conf
+
 fi
