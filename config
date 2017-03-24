@@ -15,7 +15,7 @@ ppas:
   - ppa:saiarcot895/myppa
   - ppa:git-core/ppa
 
-using_elk: false
+using_elk: true
 
 freeipa:
     ip:       10.0.2.15
