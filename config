@@ -15,8 +15,9 @@ ppas:
   - ppa:saiarcot895/myppa
   - ppa:git-core/ppa
 
+using_elk: false
 
 freeipa:
-    ip:       10.0.2.4
+    ip:       10.0.2.15
     hostname: ipa
     fqdn:     ipa.example.com

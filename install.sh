@@ -177,3 +177,6 @@ echo "$CONFIG_freeipa__ip      $CONFIG_freeipa__hostname  $CONFIG_freeipa__fqdn"
 # enable ufw
 sudo ufw enable
 
+if $CONFIG_using_elk; then
+    sudo sysctl -w vm.max_map_count=262144
+fi
