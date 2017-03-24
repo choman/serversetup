@@ -33,3 +33,5 @@ NOTE:
 NOTE:
 - Should be able to install filebeat(s) on any system and send logs to the logstash server
 - Currently the log data is not persistent
+- Currently setting max ram "sysctl -w vm.max_map_count=262144" on host!
+  should see if there is an alternative  to fix this in the container
