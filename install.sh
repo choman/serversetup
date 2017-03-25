@@ -176,6 +176,7 @@ echo "$CONFIG_freeipa__ip      $CONFIG_freeipa__hostname  $CONFIG_freeipa__fqdn"
 
 # enable ufw
 sudo ufw enable
+sudo ufw allow 22
 
 if $CONFIG_using_elk; then
     MAX="vm.max_map_count=262144"
